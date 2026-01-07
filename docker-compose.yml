@@ -1,0 +1,26 @@
+
+services:
+  config-server:
+    build:
+      context: .
+      dockerfile: docker/config-server/Dockerfile
+    volumes:
+      - ./secrets/id_ed25519:/run/secrets/ssh_key:ro
+      - ./secrets/known_hosts:/run/secrets/known_hosts:ro
+    environment:
+      GIT_SSH_COMMAND: "ssh -i /run/secrets/ssh_key -o UserKnownHostsFile=/run/secrets/known_hosts"
+    ports:
+      - "8888:8888"
+    networks:
+      - fintech-net
+  eureka-server:
+    build:
+      context: .
+      dockerfile: docker/eureka-server/Dockerfile
+    ports:
+      - "8761:8761"
+    networks:
+      - fintech-net
+
+networks:
+  fintech-net:

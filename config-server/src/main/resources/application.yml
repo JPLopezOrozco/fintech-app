@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: git@github.com:JPLopezOrozco/fintech-config-server.git
+          strict-host-key-checking: true
+          known-hosts-file: /run/secrets/known_hosts
+          private-key: /run/secrets/ssh_key
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka
+
+
+
+server:
+  port: 8888
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
